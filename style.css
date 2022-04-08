@@ -11,7 +11,16 @@ button {
     justify-content: center;
     height: 50px;
     width: 300px;
+    
+    padding: 10px;
+}
+
+.sum-display{
+    justify-content: flex-end;
+    align-items:flex-start;
     margin-top: 20px;
+    height: 10px;
+    
 }
 
 
