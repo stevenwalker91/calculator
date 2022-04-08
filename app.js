@@ -36,13 +36,12 @@ function operate(operator, numberOne, numberTwo){
     }
 }
 
-function updateDisplay(){
 
+function getUserNumberInput(){
     //get the number of the selected key
     const enteredNumber = this.dataset.number;
     
-    
-   //firstNumberEntered flag is changed to true to indicate an operator has been selected and user is on to second number
+    //firstNumberEntered flag is changed to true to indicate an operator has been selected and user is on to second number
     if (!firstNumberEntered) {
         
         //either append the previously entered numbers or store the new number as firstNumber
@@ -56,8 +55,16 @@ function updateDisplay(){
 
     }
 
+    updateDisplay();
+}
+function updateDisplay(){
+
     //update the UI with the number entered so far
-    display.innerHTML = displayValue;   
+    display.innerHTML = displayValue;
+    
+    if (secondDisplayValue !== undefined) {
+        sumDisplay.innerHTML = secondDisplayValue;  
+    } 
 }
 
 function orchestrateOperator(){
@@ -69,7 +76,7 @@ function orchestrateOperator(){
 
     //first add the operator to the sum
     sum.push(this.dataset.operator);
-    
+
     //then get the original number input and convert to int and also add it to the sum  
     sum.push(parseInt(firstNumber));
 
@@ -77,30 +84,44 @@ function orchestrateOperator(){
     firstNumberEntered = true;
 
     //display the sum so far
-    secondDisplayValue = displayValue + ' ' + this.innerHTML + ' ';
-    sumDisplay.innerHTML = secondDisplayValue;
-    display.innerHTML = '';
+    secondDisplayValue = firstNumber + ' ' + this.innerHTML + ' ';
+    displayValue = '';
+    updateDisplay();
 }
 
 function sumUp(){
-    console.log(displayValue);
+
+    //kill if second number is null to pretend user repeatedly pressing when there is nothing to calculate
+    if (secondNumber == null) {
+        return;
+    }
+
     //push the second number into the sum
     sum.push(parseInt(secondNumber));
 
     secondDisplayValue +=  ' ' + secondNumber + ' ='
     sumDisplay.innerHTML = secondDisplayValue;
+   
     //call operate with the sum details
-    display.innerHTML = operate(sum[0], sum[1], sum[2]);
+    const result = operate(sum[0], sum[1], sum[2]);
+    
+    //display result and clear down variables
+    display.innerHTML = result;
+
+    firstNumber = result;
+    enteredNumber = result;
+    sum = [];
+    secondNumber = null;
+
 }
 
 let firstNumber;
 let secondNumber;
 let operator;
-let sum = [];
+let sum = []; //check later if this is needed given we should already have all this in other variables
 let firstNumberEntered = false;
 let displayValue;
 let secondDisplayValue;
-
 
 
 
@@ -110,6 +131,6 @@ const display = document.getElementById('number-display');
 const sumDisplay = document.getElementById('sum-display');
 const sumkey = document.querySelector('.sum-key')
 
-numberKeys.forEach(key => key.addEventListener('click', updateDisplay));
+numberKeys.forEach(key => key.addEventListener('click', getUserNumberInput));
 operatorKeys.forEach(key => key.addEventListener('click', orchestrateOperator));
 sumkey.addEventListener('click', sumUp);
