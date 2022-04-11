@@ -2,34 +2,30 @@ function add(numberOne, numberTwo) {
     console.log(numberOne + numberTwo);
     return numberOne + numberTwo; 
 }
-
 function subtract(numberOne, numberTwo) {
     console.log(numberOne - numberTwo);
     return numberOne - numberTwo;
 }
-
 function multiply(numberOne, numberTwo) {
     console.log(numberOne * numberTwo);
     return numberOne * numberTwo;
 }
-
 function divide(numberOne, numberTwo) {
     console.log(numberOne / numberTwo);
     return numberOne / numberTwo;
 }
-
 function operate(operator, numberOne, numberTwo){
     switch(operator) {
-        case 'add':
+        case '+':
             return add(numberOne, numberTwo);
             break;
-        case 'subtract':
+        case '-':
             return subtract(numberOne, numberTwo);
             break;
-        case 'multiply':
+        case '*':
             return multiply(numberOne, numberTwo);
             break;
-        case 'divide':
+        case '/':
             return divide(numberOne, numberTwo);
             break;
 
@@ -43,86 +39,87 @@ function getUserNumberInput(){
     
     //firstNumberEntered flag is changed to true to indicate an operator has been selected and user is on to second number
     if (!firstNumberEntered) {
-        
-        //either append the previously entered numbers or store the new number as firstNumber
-        (firstNumber == null) ? firstNumber = enteredNumber : firstNumber += enteredNumber;
-        displayValue = firstNumber; 
+        firstNumber += enteredNumber;
+        updateDisplay('mainDisplay');
 
     } else {
-        (secondNumber == null) ? secondNumber = enteredNumber : secondNumber += enteredNumber;
+        secondNumber += enteredNumber;
         //console.log(secondNumber);
-        displayValue = secondNumber;
+        updateDisplay('mainDisplay');
 
+    }  
+}
+
+function updateDisplay(displayToUpdate){
+
+    if (displayToUpdate == 'secondaryDisplay') {
+        if (secondNumber != '') {
+            //display the whole string
+            sumDisplay.innerHTML = firstNumber + ' ' + operator + ' ' + secondNumber  + ' = ';
+        } else {
+            //display up to the operator
+            sumDisplay.innerHTML = firstNumber + ' ' + operator + ' ';
+        }
     }
 
-    updateDisplay();
-}
-function updateDisplay(){
-
-    //update the UI with the number entered so far
-    display.innerHTML = displayValue;
+    if (displayToUpdate == 'mainDisplay') {
+        if (!firstNumberEntered) {
+            display.innerHTML = firstNumber;
+        } else {
+            display.innerHTML = secondNumber;
+        }
+        
+    }
     
-    if (secondDisplayValue !== undefined) {
-        sumDisplay.innerHTML = secondDisplayValue;  
-    } 
+
 }
 
 function orchestrateOperator(){
 
     //first check that a number has been entered, otherwise kill the function
-    if (firstNumber == null) {
+    if (firstNumber == '') {
         return;
     }
 
-    //first add the operator to the sum
-    sum.push(this.dataset.operator);
-
-    //then get the original number input and convert to int and also add it to the sum  
-    sum.push(parseInt(firstNumber));
+    //if operator is already populated, it looks like the user is trying to chain together a sum 
+    if (operator != '' && firstNumber != '') {
+     sumUp();   
+    }
+    
+    operator = this.innerHTML;
 
     //update flag to say first number has been entered
     firstNumberEntered = true;
 
-    //display the sum so far
-    secondDisplayValue = firstNumber + ' ' + this.innerHTML + ' ';
-    displayValue = '';
-    updateDisplay();
+    updateDisplay('secondaryDisplay');
 }
 
 function sumUp(){
 
-    //kill if second number is null to pretend user repeatedly pressing when there is nothing to calculate
-    if (secondNumber == null) {
+    //kill if second number is empty to pretend user repeatedly pressing when there is nothing to calculate
+    if (secondNumber == '') {
         return;
     }
 
-    //push the second number into the sum
-    sum.push(parseInt(secondNumber));
+   updateDisplay('secondaryDisplay')
 
-    secondDisplayValue +=  ' ' + secondNumber + ' ='
-    sumDisplay.innerHTML = secondDisplayValue;
    
-    //call operate with the sum details
-    const result = operate(sum[0], sum[1], sum[2]);
+   //call operate with the sum details
+    const result = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
     
     //display result and clear down variables
     display.innerHTML = result;
 
     firstNumber = result;
-    enteredNumber = result;
-    sum = [];
-    secondNumber = null;
+    secondNumber = '';
 
 }
 
-let firstNumber;
-let secondNumber;
-let operator;
-let sum = []; //check later if this is needed given we should already have all this in other variables
-let firstNumberEntered = false;
-let displayValue;
-let secondDisplayValue;
 
+let firstNumber = '';
+let secondNumber = '';
+let operator = '';
+let firstNumberEntered = false;
 
 
 const numberKeys = document.querySelectorAll('.number-key');
