@@ -1,19 +1,13 @@
 function add(numberOne, numberTwo) {
-    console.log(numberOne + numberTwo);
     return numberOne + numberTwo; 
 }
 function subtract(numberOne, numberTwo) {
-    console.log(numberOne - numberTwo);
     return numberOne - numberTwo;
 }
 function multiply(numberOne, numberTwo) {
-    console.log(numberOne * numberTwo);
     return numberOne * numberTwo;
 }
 function divide(numberOne, numberTwo) {
-    if (numberTwo === 0) {
-        return "ya canae divide by 0 in maths ya fanny";
-    }
     return numberOne / numberTwo;
 }
 function operate(operator, numberOne, numberTwo){
@@ -44,13 +38,8 @@ function getUserNumberInput(){
         firstNumber += enteredNumber;
         updateDisplay('mainDisplay');
     } else {
-        //check if user is trying to divide by 0 in which case they need shut the fuck down
-        if (operator == '/' && enteredNumber == 0) {
-            handleDivZeroDicks();
-        } else {
-            secondNumber += enteredNumber;
-            updateDisplay('mainDisplay');
-        }
+        secondNumber += enteredNumber;
+        updateDisplay('mainDisplay');
 
     }  
 }
@@ -111,14 +100,16 @@ function sumUp(){
         return;
     }
 
-   updateDisplay('secondaryDisplay')
+    if (operator == '/' && secondNumber == 0) {
+        handleDivZeroDicks();
+        return;
+    }
 
-   //call operate with the sum details and store it in firstNumber so it can be used for chain sums
-   firstNumber = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
-    
-    //display result and clear down variables
+    updateDisplay('secondaryDisplay')
+
+    //call operate with the sum details and store it in firstNumber so it can be used for chain sums
+    firstNumber = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
     secondNumber = '';
-    //operator = '';
     updateDisplay('result');
 }
 
@@ -133,14 +124,13 @@ function clear(){
 function handleDivZeroDicks(){
     const warningMessage = "Ya canae divide by 0 in maths ya fucking balloon. Try again shit eater."
     messages.innerText = warningMessage;
+    secondNumber = '';
 }
-
 
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
 let firstNumberEntered = false;
-
 
 const numberKeys = document.querySelectorAll('.number-key');
 const operatorKeys = document.querySelectorAll('.operator-key');
