@@ -46,7 +46,6 @@ function getUserNumberInput(){
         secondNumber += enteredNumber;
         //console.log(secondNumber);
         updateDisplay('mainDisplay');
-
     }  
 }
 
@@ -60,18 +59,21 @@ function updateDisplay(displayToUpdate){
             //display up to the operator
             sumDisplay.innerHTML = firstNumber + ' ' + operator + ' ';
         }
-    }
 
-    if (displayToUpdate == 'mainDisplay') {
+    } else if (displayToUpdate == 'mainDisplay') {
         if (!firstNumberEntered) {
             display.innerHTML = firstNumber;
         } else {
             display.innerHTML = secondNumber;
-        }
+        }    
+     
+    } else if (displayToUpdate == 'result') {
+        display.innerHTML = firstNumber;
         
+    } else if (displayToUpdate == 'clear') {
+        display.innerHTML = '';
+        sumDisplay.innerHTML = '';
     }
-    
-
 }
 
 function orchestrateOperator(){
@@ -103,16 +105,21 @@ function sumUp(){
 
    updateDisplay('secondaryDisplay')
 
-   
-   //call operate with the sum details
-    const result = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
+   //call operate with the sum details and store it in firstNumber so it can be used for chain sums
+   firstNumber = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
     
     //display result and clear down variables
-    display.innerHTML = result;
-
-    firstNumber = result;
     secondNumber = '';
+    //operator = '';
+    updateDisplay('result');
+}
 
+function clear(){
+    firstNumber = '';
+    secondNumber = '';
+    operator = '';
+    firstNumberEntered = false;
+    updateDisplay('clear');
 }
 
 
@@ -126,8 +133,10 @@ const numberKeys = document.querySelectorAll('.number-key');
 const operatorKeys = document.querySelectorAll('.operator-key');
 const display = document.getElementById('number-display');
 const sumDisplay = document.getElementById('sum-display');
-const sumkey = document.querySelector('.sum-key')
+const sumkey = document.getElementById('equals');
+const clearKey = document.getElementById('ac');
 
 numberKeys.forEach(key => key.addEventListener('click', getUserNumberInput));
 operatorKeys.forEach(key => key.addEventListener('click', orchestrateOperator));
 sumkey.addEventListener('click', sumUp);
+clearKey.addEventListener('click', clear);
