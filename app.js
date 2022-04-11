@@ -11,7 +11,9 @@ function multiply(numberOne, numberTwo) {
     return numberOne * numberTwo;
 }
 function divide(numberOne, numberTwo) {
-    console.log(numberOne / numberTwo);
+    if (numberTwo === 0) {
+        return "ya canae divide by 0 in maths ya fanny";
+    }
     return numberOne / numberTwo;
 }
 function operate(operator, numberOne, numberTwo){
@@ -41,11 +43,15 @@ function getUserNumberInput(){
     if (!firstNumberEntered) {
         firstNumber += enteredNumber;
         updateDisplay('mainDisplay');
-
     } else {
-        secondNumber += enteredNumber;
-        //console.log(secondNumber);
-        updateDisplay('mainDisplay');
+        //check if user is trying to divide by 0 in which case they need shut the fuck down
+        if (operator == '/' && enteredNumber == 0) {
+            handleDivZeroDicks();
+        } else {
+            secondNumber += enteredNumber;
+            updateDisplay('mainDisplay');
+        }
+
     }  
 }
 
@@ -69,11 +75,13 @@ function updateDisplay(displayToUpdate){
      
     } else if (displayToUpdate == 'result') {
         display.innerHTML = firstNumber;
-        
+
     } else if (displayToUpdate == 'clear') {
         display.innerHTML = '';
         sumDisplay.innerHTML = '';
     }
+
+    messages.innerText = '';
 }
 
 function orchestrateOperator(){
@@ -122,6 +130,11 @@ function clear(){
     updateDisplay('clear');
 }
 
+function handleDivZeroDicks(){
+    const warningMessage = "Ya canae divide by 0 in maths ya fucking balloon. Try again shit eater."
+    messages.innerText = warningMessage;
+}
+
 
 let firstNumber = '';
 let secondNumber = '';
@@ -135,6 +148,7 @@ const display = document.getElementById('number-display');
 const sumDisplay = document.getElementById('sum-display');
 const sumkey = document.getElementById('equals');
 const clearKey = document.getElementById('ac');
+const messages = document.getElementById('messages');
 
 numberKeys.forEach(key => key.addEventListener('click', getUserNumberInput));
 operatorKeys.forEach(key => key.addEventListener('click', orchestrateOperator));
