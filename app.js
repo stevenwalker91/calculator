@@ -18,21 +18,57 @@ function operate(operator, numberOne, numberTwo){
         case '-':
             return subtract(numberOne, numberTwo);
             break;
-        case '*':
+        case 'x':
             return multiply(numberOne, numberTwo);
             break;
-        case '/':
+        case '÷':
             return divide(numberOne, numberTwo);
             break;
 
     }
 }
 
+function handleKeyboardInput(event){
+    const enteredChar = event.key;
+    //define which inputs ae ok
+    if (enteredChar >= 0 && enteredChar < 10) {
+        getUserNumberInput(enteredChar);
+    }
 
-function getUserNumberInput(){
-    //get the number of the selected key
-    const enteredNumber = this.dataset.number;
-    
+    switch(enteredChar) {
+        case '+':
+        case '-':
+            orchestrateOperator(enteredChar);
+            break;
+        case '/':
+        case '÷':
+            orchestrateOperator('÷');
+            break;
+        case '*':
+        case 'x':
+            orchestrateOperator('x');
+            break;
+        case (enteredChar < 10 && enteredChar >= 0):
+            getUserNumberInput(enteredChar);
+            break;
+        case 'Enter':
+        case '=':
+            sumUp();
+            break;
+        case 'Escape':
+        case 'Backspace':
+            clear();
+            break;
+
+
+    }
+}
+
+
+function getUserNumberInput(inputValue){
+
+    const enteredNumber = inputValue;
+
     //firstNumberEntered flag is changed to true to indicate an operator has been selected and user is on to second number
     if (!firstNumberEntered) {
         firstNumber += enteredNumber;
@@ -73,7 +109,7 @@ function updateDisplay(displayToUpdate){
     messages.innerText = '';
 }
 
-function orchestrateOperator(){
+function orchestrateOperator(enteredOperator){
 
     //first check that a number has been entered, otherwise kill the function
     if (firstNumber == '') {
@@ -85,7 +121,7 @@ function orchestrateOperator(){
      sumUp();   
     }
     
-    operator = this.innerHTML;
+    operator = enteredOperator;
 
     //update flag to say first number has been entered
     firstNumberEntered = true;
@@ -140,7 +176,8 @@ const sumkey = document.getElementById('equals');
 const clearKey = document.getElementById('ac');
 const messages = document.getElementById('messages');
 
-numberKeys.forEach(key => key.addEventListener('click', getUserNumberInput));
-operatorKeys.forEach(key => key.addEventListener('click', orchestrateOperator));
+numberKeys.forEach(key => key.addEventListener('click', function(){ getUserNumberInput(this.dataset.number) }));
+operatorKeys.forEach(key => key.addEventListener('click', function(){ orchestrateOperator(this.innerHTML) }));
 sumkey.addEventListener('click', sumUp);
 clearKey.addEventListener('click', clear);
+window.addEventListener('keydown', handleKeyboardInput);
