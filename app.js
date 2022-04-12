@@ -56,11 +56,11 @@ function handleKeyboardInput(event){
             sumUp();
             break;
         case 'Escape':
-        case 'Backspace':
             clear();
             break;
-
-
+        case 'Backspace':
+            backspace();
+            break;
     }
 }
 
@@ -147,6 +147,7 @@ function sumUp(){
     firstNumber = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
     secondNumber = '';
     updateDisplay('result');
+    firstNumberEntered = false;
 }
 
 function clear(){
@@ -155,6 +156,18 @@ function clear(){
     operator = '';
     firstNumberEntered = false;
     updateDisplay('clear');
+}
+
+function backspace(){
+    //determine which value is in context
+    if (secondNumber != '') {
+        secondNumber = secondNumber.slice(0, -1);
+        updateDisplay('mainDisplay');
+    } else {
+        firstNumber = firstNumber.toString().slice(0, -1);
+        updateDisplay('mainDisplay');
+    }
+
 }
 
 function handleDivZeroDicks(){
