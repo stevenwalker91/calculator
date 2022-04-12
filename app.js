@@ -176,7 +176,7 @@ function clear(){
 }
 
 function backspace(){
-    //determine which value is in context
+    //determine which value is in context based on whether second number has a value or not
     if (secondNumber != '') {
         secondNumber = secondNumber.slice(0, -1);
         updateDisplay('mainDisplay');
@@ -188,6 +188,7 @@ function backspace(){
 }
 
 function checkDecimals() {
+    //if second number is not empty then it is the number in focus and should be checked, else check the first number
     if (secondNumber != '') {
         if (secondNumber.includes('.')) {
             return true;
