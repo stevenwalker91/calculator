@@ -30,12 +30,12 @@ function operate(operator, numberOne, numberTwo){
 
 function handleKeyboardInput(event){
     const enteredChar = event.key;
-
     //define which inputs are ok
     if (enteredChar >= 0 && enteredChar < 10 || enteredChar == '.') {
         getUserNumberInput(enteredChar);
         return;
     }
+    
 
     switch(enteredChar) {
         case '+':
@@ -190,11 +190,11 @@ function backspace(){
 function checkDecimals() {
     //if second number is not empty then it is the number in focus and should be checked, else check the first number
     if (secondNumber != '') {
-        if (secondNumber.includes('.')) {
+        if (secondNumber.toString().includes('.')) {
             return true;
         }
     } else {
-        if (firstNumber.includes('.')) {  
+        if (firstNumber.toString().includes('.')) {  
             return true;   
         }
     }
