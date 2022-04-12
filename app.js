@@ -32,7 +32,7 @@ function handleKeyboardInput(event){
     const enteredChar = event.key;
 
     //define which inputs ae ok
-    if (enteredChar >= 0 && enteredChar < 10) {
+    if (enteredChar >= 0 && enteredChar < 10 || enteredChar == '.') {
         getUserNumberInput(enteredChar);
         return;
     }
@@ -156,7 +156,7 @@ function sumUp(){
     updateDisplay('secondaryDisplay')
 
     //call operate with the sum details and store it in firstNumber so it can be used for chain sums
-    firstNumber = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
+    firstNumber = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
     secondNumber = '';
     updateDisplay('result');
     firstNumberEntered = false;
