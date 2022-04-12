@@ -30,9 +30,11 @@ function operate(operator, numberOne, numberTwo){
 
 function handleKeyboardInput(event){
     const enteredChar = event.key;
+
     //define which inputs ae ok
     if (enteredChar >= 0 && enteredChar < 10) {
         getUserNumberInput(enteredChar);
+        return;
     }
 
     switch(enteredChar) {
@@ -61,6 +63,18 @@ function handleKeyboardInput(event){
         case 'Backspace':
             backspace();
             break;
+        case 'Shift':
+        case 'Control':
+        case 'Tab':
+        case 'Meta':
+        case 'CapsLock':
+        case 'Alt':
+            break;
+        default:
+            const warningMessage = "The key isn't supported. Why not try a number, operator, escape to clear, or backspace to delete."
+            messages.innerHTML= warningMessage;
+            secondNumber = '';
+
     }
 }
 
@@ -136,7 +150,7 @@ function sumUp(){
         return;
     }
 
-    if (operator == '/' && secondNumber == 0) {
+    if (operator == '÷' && secondNumber == 0) {
         handleDivZeroDicks();
         return;
     }
