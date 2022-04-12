@@ -73,8 +73,6 @@ function handleKeyboardInput(event){
         default:
             const warningMessage = "The key isn't supported. Why not try a number, operator, escape to clear, or backspace to delete."
             messages.innerHTML= warningMessage;
-            secondNumber = '';
-
     }
 }
 
@@ -185,7 +183,7 @@ function backspace(){
 }
 
 function handleDivZeroDicks(){
-    const warningMessage = "Ya canae divide by 0 in maths ya fucking balloon. Try again shit eater."
+    const warningMessage = "Ya canae divide by 0 in maths ya fucking balloon. Try again bawbag."
     messages.innerText = warningMessage;
     secondNumber = '';
 }
