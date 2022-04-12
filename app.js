@@ -31,7 +31,7 @@ function operate(operator, numberOne, numberTwo){
 function handleKeyboardInput(event){
     const enteredChar = event.key;
 
-    //define which inputs ae ok
+    //define which inputs are ok
     if (enteredChar >= 0 && enteredChar < 10 || enteredChar == '.') {
         getUserNumberInput(enteredChar);
         return;
@@ -80,6 +80,11 @@ function handleKeyboardInput(event){
 function getUserNumberInput(inputValue){
 
     const enteredNumber = inputValue;
+
+    if (checkDecimals() === true && enteredNumber == '.') {
+        return;
+    } 
+    
 
     //firstNumberEntered flag is changed to true to indicate an operator has been selected and user is on to second number
     if (!firstNumberEntered) {
@@ -182,6 +187,20 @@ function backspace(){
 
 }
 
+function checkDecimals() {
+    if (secondNumber != '') {
+        if (secondNumber.includes('.')) {
+            return true;
+        }
+    } else {
+        if (firstNumber.includes('.')) {  
+            return true;   
+        }
+    }
+    
+}
+
+
 function handleDivZeroDicks(){
     const warningMessage = "Ya canae divide by 0 in maths ya fucking balloon. Try again bawbag."
     messages.innerText = warningMessage;
@@ -193,6 +212,7 @@ let secondNumber = '';
 let operator = '';
 let firstNumberEntered = false;
 
+
 const numberKeys = document.querySelectorAll('.number-key');
 const operatorKeys = document.querySelectorAll('.operator-key');
 const display = document.getElementById('number-display');
@@ -200,6 +220,7 @@ const sumDisplay = document.getElementById('sum-display');
 const sumkey = document.getElementById('equals');
 const clearKey = document.getElementById('ac');
 const messages = document.getElementById('messages');
+const decimalKey = document.getElementById('decimal');
 
 numberKeys.forEach(key => key.addEventListener('click', function(){ getUserNumberInput(this.dataset.number) }));
 operatorKeys.forEach(key => key.addEventListener('click', function(){ orchestrateOperator(this.innerHTML) }));
