@@ -5,33 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <!--semantic UI-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js" defer></script>
     <script src="app.js" defer></script>
     <title>Calculator</title>
 </head>
 <body>
-    <button type="button" data-number="0" class ="number-key" id="zero">0</button>
-    <button type="button" data-number="1" class ="number-key" id="one">1</button>
-    <button type="button" data-number="2" class ="number-key" id="two">2</button>
-    <button type="button" data-number="3" class ="number-key" id="three">3</button>
-    <button type="button" data-number="4" class ="number-key" id="four">4</button>
-    <button type="button" data-number="5" class ="number-key" id="five">5</button>
-    <button type="button" data-number="6" class ="number-key" id="six">6</button>
-    <button type="button" data-number="7" class ="number-key" id="seven">7</button>
-    <button type="button" data-number="8" class ="number-key" id="eight">8</button>
-    <button type="button" data-number="9" class ="number-key" id="nine">9</button>
 
-    <button type="button" data-number="." class="number-key" id="decimal">.</button>
-    <button type="button" data-operator="add" class="operator-key" id="add">+</button>
-    <button type="button" data-operator="subtract" class="operator-key" id="subtract">-</button>
-    <button type="button" data-operator="multiply" class="operator-key" id="multiply">x</button>
-    <button type="button" data-operator="divide" class="operator-key" id="divide">÷</button>
-    <button type="button" data-operator="equals" class="sum-key" id="equals">=</button>
-    <button type="button" data-operator="ac" class="clear-key" id="ac">AC</button>
+    <div class="calc">
+        <div class="display-group">
+           <div id="sum-display" class="display sum-display"></div>
+           <div id="number-display" class="display number-display"></div>
+        </div>
+        <div class="btn-grp">
+            <button type="button" data-operator="ac" class="clear-key ui button red" id="ac">AC</button>
+            <button type="button" data-operator="delete" class="delete-key ui button red" id="delete">Delete</button>
 
-    <div id="sum-display" class="display sum-display"></div>
-    <div id="number-display" class="display"></div>
+            <button type="button" data-number="7" class ="number-key ui button grey" id="seven">7</button>
+            <button type="button" data-number="8" class ="number-key ui button grey" id="eight">8</button>
+            <button type="button" data-number="9" class ="number-key ui button grey" id="nine">9</button>
+            <button type="button" data-operator="divide" class="operator-key ui button blue" id="divide">÷</button>
 
-    <div id="messages"></div>
+            <button type="button" data-number="6" class ="number-key ui button grey" id="six">6</button>
+            <button type="button" data-number="5" class ="number-key ui button grey" id="five">5</button>
+            <button type="button" data-number="4" class ="number-key ui button grey" id="four">4</button>
+            <button type="button" data-operator="multiply" class="operator-key ui button blue" id="multiply">x</button>       
+
+            <button type="button" data-number="3" class ="number-key ui button grey" id="three">3</button>
+            <button type="button" data-number="2" class ="number-key ui button grey" id="two">2</button>
+            <button type="button" data-number="1" class ="number-key ui button grey" id="one">1</button>    
+            <button type="button" data-operator="subtract" class="operator-key ui button blue" id="subtract">-</button> 
+
+            <button type="button" data-number="0" class ="number-key ui button grey" id="zero">0</button>
+
+            <button type="button" data-number="." class="number-key ui button grey" id="decimal">.</button>
+            <button type="button" data-operator="equals" class="sum-key ui button green " id="equals">=</button>
+            <button type="button" data-operator="add" class="operator-key ui button blue" id="add">+</button>
+        </div>
+
+        <div id="messages" class="messages"></div>
+    </div>
+
+
+
+   
     
 </body>
 </html>
