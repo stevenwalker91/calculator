@@ -178,7 +178,7 @@ function clear(){
 function backspace(){
     //determine which value is in context based on whether second number has a value or not
     if (secondNumber != '') {
-        secondNumber = secondNumber.slice(0, -1);
+        secondNumber = secondNumber.toString().slice(0, -1);
         updateDisplay('mainDisplay');
     } else {
         firstNumber = firstNumber.toString().slice(0, -1);
