@@ -222,9 +222,11 @@ const sumkey = document.getElementById('equals');
 const clearKey = document.getElementById('ac');
 const messages = document.getElementById('messages');
 const decimalKey = document.getElementById('decimal');
+const deleteKey = document.getElementById('delete')
 
 numberKeys.forEach(key => key.addEventListener('click', function(){ getUserNumberInput(this.dataset.number) }));
 operatorKeys.forEach(key => key.addEventListener('click', function(){ orchestrateOperator(this.innerHTML) }));
 sumkey.addEventListener('click', sumUp);
 clearKey.addEventListener('click', clear);
+deleteKey.addEventListener('click', backspace);
 window.addEventListener('keydown', handleKeyboardInput);
